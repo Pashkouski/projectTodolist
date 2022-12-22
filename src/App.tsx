@@ -3,7 +3,8 @@ import './App.css';
 import TodoList from "./TodoList/TodoList";
 import {v1} from "uuid";
 
-type FilterValueType = 'All' | "Active" | 'Completed'
+export type FilterValueType = 'All' | "Active" | 'Completed'
+
 function App() {
     const todoListTitle1: string = "What to learn"
 
@@ -20,6 +21,16 @@ function App() {
     ]
 
 
+    const addTitle = (value: string) => {
+        let addTasks ={
+            id: v1(),
+            title: value,
+            isDone: false
+        };
+        setTasks([addTasks, ...tasks])
+    }
+
+
     const [tasks, setTasks] = useState(tasks1)
 
     const RemoveType = (id: string) => {
@@ -27,23 +38,23 @@ function App() {
         setTasks(removeTasks)
     }
 
-    const [filter, setFilter] = useState('All')
+    const [filter, setFilter] = useState<FilterValueType>('All')
 
 
     const FooFilter = () => {
-        let newFilter = tasks;
-        if(filter === 'Active') {
-            newFilter =  tasks.filter( f => !f.isDone)
-        }
-        if(filter === 'Completed') {
-            newFilter =  tasks.filter( f => f.isDone)
-        }
-        return newFilter
+        switch (filter) {
+            case "Active":
+                return tasks.filter( f => !f.isDone)
+            case "Completed":
+                return tasks.filter( f => f.isDone)
+            default:
+                return tasks
+            }
     }
 
 
 
-    const Filter = (str: string) => {
+    const Filter = (str: FilterValueType) => {
         setFilter(str)
     }
 
@@ -57,6 +68,7 @@ function App() {
                       tasks={FooFilter()}
                       RemoveType={RemoveType}
                       Filter={Filter}
+                      addTitle={addTitle}
             />
 
         </div>
