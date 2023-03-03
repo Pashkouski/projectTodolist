@@ -160,7 +160,7 @@ function App() {
                                         tasks={tasksForTodolist}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
-                                        addTask={addTask}
+                                        addTasks={addTask}
                                         changeTaskStatus={changeStatus}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
