@@ -2,7 +2,6 @@ import axios from "axios";
 import {ResponseType} from "./todolistAPI";
 
 
-
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/todo-lists/',
     withCredentials: true,
@@ -13,33 +12,36 @@ const instance = axios.create({
 
 export const tasksAPI = {
     getTasks(todoID: string) {
-        return instance.get<GetTasksResponse>(`${todoID}/tasks`)
+        return instance.get<GetTaskType>(`${todoID}/tasks`)
     },
     deleteTasks(todoID: string, taskID: string) {
         return instance.delete<ResponseType>(`${todoID}/tasks/${taskID}`)
     },
     createTasks(todoID: string, title: string) {
-        return instance.post(`${todoID}/tasks/`, {title})
+        return instance.post<ResponseType<TaskType>>(`${todoID}/tasks/`, {title})
     },
-    updateTasks(todoID: string, taskID: string, title: string) {
-        return instance.put(`${todoID}/tasks/${taskID}`, {title})
+    updateTasks(todoID: string, taskID: string, newTitle: string) {
+        return instance.put<ResponseType<TaskType>>(`${todoID}/tasks/${taskID}`, {title: newTitle})
     }
+}
+type TaskType = {
+    addedDate: string
+    deadline: null
+    description: null
+    id: string
+    order: number
+    priority: number
+    startDate: null
+    status: number
+    title: string
+    todoListId: string
+    totalCount: number
 }
 
-type GetTasksResponse = {
-    error: string | null
+
+type GetTaskType = {
+    error: null
+    items: [TaskType]
     totalCount: number
-    Items: {
-        description: string
-        title: string
-        completed: boolean
-        status: number
-        priority: number
-        startDate: string
-        deadline: string
-        id: string
-        todoListId: string
-        order: number
-        addedDate: string
-    }
 }
+
