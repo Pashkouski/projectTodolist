@@ -21,7 +21,7 @@ import {Navigate} from "react-router-dom";
 export const TodolistsList: React.FC = () => {
     const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
-    const isLoginIn = useAppSelector(state => state.authReducer.isLoggedIn)
+    const isLoginIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

@@ -12,11 +12,12 @@ const instance = axios.create({
 export const authAPI = {
     login(data: LoginType) {
         return instance.post<{}, AxiosResponse<ResponseType<{ userId: number }>>, LoginType>('/auth/login', data);
+
     },
     logout() {
          },
     me() {
-        return instance.get<ResponseType<{ id: number, login: string, email: string }>>('/auth/me');
+        return instance.get<ResponseType<UserType>>('/auth/me');
     }
 }
 
@@ -103,4 +104,10 @@ type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
+}
+
+type UserType = {
+    id: number
+    email: string
+    login: string
 }

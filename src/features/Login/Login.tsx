@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
 
 
+
 type FormikErrorType = {
     email?: string
     password?: string
@@ -27,6 +28,8 @@ export type LoginType = {
 
 export const Login = () => {
     const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+
      const formik = useFormik({
         initialValues: {
             email: '',
@@ -55,7 +58,9 @@ export const Login = () => {
         },
     })
 
-
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
+    }
 
 
     return <Grid container justifyContent={'center'}>
